@@ -6,10 +6,15 @@ import core.basesyntax.model.FruitTransaction;
 public class ReturnOperation implements OperationHandler {
     @Override
     public void performOperation(FruitTransaction transaction) {
-        String fruit = transaction.getFruit();
         int quantity = transaction.getQuantity();
 
+        if (quantity < 0) {
+            throw new RuntimeException("Return quantity cannot be negative");
+        }
+
+        String fruit = transaction.getFruit();
         int current = Storage.get(fruit);
+
         Storage.put(fruit, current + quantity);
     }
 }

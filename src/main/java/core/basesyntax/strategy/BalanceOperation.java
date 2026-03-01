@@ -6,8 +6,12 @@ import core.basesyntax.model.FruitTransaction;
 public class BalanceOperation implements OperationHandler {
     @Override
     public void performOperation(FruitTransaction transaction) {
-        String fruit = transaction.getFruit();
         int quantity = transaction.getQuantity();
-        Storage.put(fruit, quantity);
+
+        if (quantity < 0) {
+            throw new RuntimeException("Balance cannot be negative");
+        }
+
+        Storage.put(transaction.getFruit(), quantity);
     }
 }
